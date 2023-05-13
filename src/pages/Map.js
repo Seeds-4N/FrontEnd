@@ -21,8 +21,6 @@ const Map=(props)=>{
     
 
 
-
-
     return(
     <div>
         <Link to="/SignUp">
