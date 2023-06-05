@@ -1,9 +1,42 @@
+
+.signupbody{
+    background-color: #9FAA81;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 20%;
+    height: 1000px;
+}
+
+.signupbody input, button{
+    display: block;
+    height: 61px;
+    width: 446px;
+    border: none;
+    border-radius: 10px;
+    margin: auto;
+}
+.signupbody input{  
+    margin-top: 31px;
+    padding-left: 30px;
+    background-color: #D9D9D9;
+    outline: none;
+}
+.signupbody input::placeholder{
+    text-align: center;
+}
+.signupbody button{
+    margin-top: 41px;
+    color: white;
+    font-weight: bold;
+}
+
 .easy{
     width: 446px;
     display: grid;
     grid-template-columns: auto auto;
     margin-top: 19px;
-    margin-left: 25%;
+    margin: auto;
 }
 .validbutton{
     background-color: #878A72;
@@ -11,3 +44,68 @@
 .isvalidbutton{
     background-color: #B4B89F;
 }
+.topbar{
+    display: flex;
+    padding-left: 30px;
+}
+.topbar button{
+    border: none;
+    color: white;
+    font-weight: bolder;
+    background-color: transparent;
+    width: auto;
+}
+.topbar input{
+    margin: 10px;
+    padding-left: 10px;
+    border-radius: 3px;
+    border: none;
+    width: 20%;
+}
+.topbar h4{
+    color: white;
+    margin-right: 20%;
+    margin-left: 30%;
+}
+Link{
+    text-decoration: none;
+}
+.main{
+    position: relative;
+}
+
+#map{
+    width: 100%;
+    height: 1000px;
+}
+
+.minibar{
+    position: absolute;
+    right: 30px;
+    top: 50px;
+    overflow: hidden;
+    z-index: 100;
+    background-color: white;
+    border-radius: 20px;
+    padding: 5px;
+}
+.minibar button{
+    width: auto;
+    background-color: transparent;
+    font-weight: bolder;
+}
+  /*
+  style={{width:'1000px', height:'1000px'}}
+
+
+  #map {
+    width: 100%;
+    height: 100%;
+    position:absolute;
+    left:0;
+    top:0;
+    margin:0;
+    padding:0;
+    border: solid 2px red;
+  }
+  */

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
-import styles from './CSS/signup.module.css';
 import axios from 'axios';
 
 
@@ -70,8 +69,7 @@ const SignUp=(props)=>{
 
     return (
 
-        <body>
-            <div>
+        <div className='signupbody'>
                 <div>회원가입</div>
                 
                 <input 
@@ -119,7 +117,6 @@ const SignUp=(props)=>{
                     </div>
                 </div>
             </div>
-        </body>
         
     )
     
