@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
-
+import "../css/signup.css";
+import "../css/main.css";
 
 const SignUp=(props)=>{
 
@@ -53,8 +53,6 @@ const SignUp=(props)=>{
         
 
         axios.get('http://127.0.0.1:8000/register/'
-        //https://jsonplaceholder.typicode.com/todos/
-        //http://127.0.0.1:8000/register/
         ,{
             name:name,
             id:id,
@@ -84,7 +82,7 @@ const SignUp=(props)=>{
                 <input
                     type='eamil'
                     id='id' 
-                    placeholder='아이디를 입력해주세요'
+                    placeholder='이메일를 입력해주세요'
                     required
                     value={id}
                     onChange={handleinputid}

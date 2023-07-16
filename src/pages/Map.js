@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
+import "../css/Map.css";
+import "../css/main.css";
 
 const {kakao}=window;
 
@@ -15,6 +17,30 @@ const Map=(props)=>{
             level: 3
         };
         const map=new kakao.maps.Map(container, options);
+
+        function displayMarker(locPosition, message) {
+
+            // 마커를 생성합니다
+            var marker = new kakao.maps.Marker({  
+                map: map, 
+                position: locPosition
+            }); 
+            
+            var iwContent = message, // 인포윈도우에 표시할 내용
+                iwRemoveable = true;
+        
+            // 인포윈도우를 생성
+            var infowindow = new kakao.maps.InfoWindow({
+                content : iwContent,
+                removable : iwRemoveable
+            });
+            
+            // 인포윈도우를 마커위에 표시 
+            infowindow.open(map, marker);
+            
+            // 지도 중심좌표를 접속위치로 변경
+            map.setCenter(locPosition);      
+        } 
 
         function MyLocation(){
             if (navigator.geolocation) {
@@ -44,31 +70,8 @@ const Map=(props)=>{
 
         MyLocation();
        
-        function displayMarker(locPosition, message) {
-
-            // 마커를 생성합니다
-            var marker = new kakao.maps.Marker({  
-                map: map, 
-                position: locPosition
-            }); 
-            
-            var iwContent = message, // 인포윈도우에 표시할 내용
-                iwRemoveable = true;
-        
-            // 인포윈도우를 생성
-            var infowindow = new kakao.maps.InfoWindow({
-                content : iwContent,
-                removable : iwRemoveable
-            });
-            
-            // 인포윈도우를 마커위에 표시 
-            infowindow.open(map, marker);
-            
-            // 지도 중심좌표를 접속위치로 변경
-            map.setCenter(locPosition);      
-        }    
-        
     },[]);
+    
     
     return(
         <div>
@@ -87,8 +90,8 @@ const Map=(props)=>{
             </div>
             <div className='main'>
                 <div className='minibar'>
-                    <button id='mylocation' className='mylcn_btn'>-O-</button>
-                    <button id='mark' className='mark_btn'>☆</button>
+                    <button>-O-</button>
+                    <button>☆</button>
                 </div>
                 <div id='map'></div>
             </div>

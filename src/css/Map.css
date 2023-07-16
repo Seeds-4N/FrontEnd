@@ -1,0 +1,19 @@
+/* Map.js */
+.main{
+    position: relative;
+}
+.minibar{
+    position: absolute;
+    right: 30px;
+    top: 50px;
+    overflow: hidden;
+    z-index: 100;
+    background-color: white;
+    border-radius: 20px;
+    padding: 5px;
+}
+.minibar button{
+    width: auto;
+    background-color: transparent;
+    font-weight: bolder;
+}
