@@ -1,46 +1,61 @@
 /*signUp.js*/
-.easy{
-    width: 446px;
-    display: grid;
-    grid-template-columns: auto auto;
-    margin-top: 19px;
-    margin: auto;
-}
+
 .signupbody{
-    background-color: #9FAA81;
-    color: white;
-    font-weight: bold;
-    text-align: center;
+    background-color: #AFC2AE;
     padding-top: 20%;
-    height: 1000px;
+    height: 100vh;
+    text-align: center;
 }
 
-.signupbody input, button{
+.form{
+    color: #FCF7EC;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.form input{  
     display: block;
     height: 61px;
     width: 446px;
     border: none;
     border-radius: 10px;
     margin: auto;
-}
-.signupbody input{  
     margin-top: 31px;
     padding-left: 30px;
     background-color: #D9D9D9;
     outline: none;
 }
-.signupbody input::placeholder{
+.form input::placeholder{
     text-align: center;
 }
-.signupbody button{
+.form button{
+    display: block;
+    height: 61px;
+    width: 480px;
+    border: none;
+    border-radius: 10px;
+    margin: auto;
     margin-top: 41px;
+    margin-bottom: 30px;
     color: white;
     font-weight: bold;
 }
 .validbutton{
-    background-color: #878A72;
+    background-color: #9BA79C;
 }
 .isvalidbutton{
     background-color: #B4B89F;
+}
+.sociallogin{
+    width: 446px;
+    display: grid;
+    grid-template-columns: auto auto;
+    margin-top: 19px;
+    margin: auto;
+}
+
+.invalid{
+    color: red;
+    font-size: smaller;
 }
 
