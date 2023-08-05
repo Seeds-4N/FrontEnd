@@ -16,13 +16,14 @@
     overflow: hidden;
     z-index: 100;
     background-color: white;
-    border-radius: 20px;
-    padding: 5px;
+    border-radius: 30px;
+    padding: 10px;
 }
 .minibar button{
     width: auto;
     background-color: transparent;
     font-weight: bolder;
+    border: none;
 }
 
 
@@ -40,9 +41,9 @@ Link{
     
 }
 
-/* module */
+/* mainbar */
 .mainbar{
-    height: 100vh;
+    height: 98vh;
     width: 100px;
     min-width: 100px;
     background-color: #AFC2AE;
@@ -52,12 +53,18 @@ Link{
 .mainbar button{
     border: none;
     width: 100%;
+    height: 80px;
     font-weight: bolder;
 }
 .mainbar>button:hover, .mainbar>button:active{
     background-color: #FCF7EC;
     color: #9BA79C;
 }
+.loginbtn, .homebtn{
+    background-color: #AFC2AE;
+    color: #FCF7EC;
+}
+
 
 
 
@@ -70,7 +77,8 @@ Link{
     width: 30vw;
     height: 100vh;
     transition: 0.5s;
-    padding: 50px 60px 50px 60px;
+    padding-top: 10px;
+    /*padding: 50px 60px 50px 60px;*/
 }
 .mymemoInactive, .mylctInactive, .mypageInactive{
     position: absolute;
@@ -84,8 +92,44 @@ Link{
     color: #FCF7EC;
     background-color: #AFC2AE;
 }
-.linkbtn{
-    background-color: #AFC2AE;
-    color: #FCF7EC;
+
+
+
+/*Mylocation*/
+.mylocation  button{
+    background-color: transparent;
+    border: none;
+    text-align: left;
+    
 }
+.folderlist > button{
+    width: 100%;
+    padding: 20px;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.075);
+    display: flex;
+}
+.more{
+    position: absolute;
+    right: 10px;
+    width: auto;
+}
+.more:hover{
+    font-weight: bolder;
+}
+
+.locationList button{  
+    width: 100%;
+    padding: 20px;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.075);
+}
+
+.location > button{  
+    position: absolute;
+    right: 10px;
+    width: auto;
+    margin-top: 10px;
+}
+.folderlist > button:hover, .locationList button:hover{
+    background-color: #f0e9d83b;
+} 
 

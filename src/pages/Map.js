@@ -3,7 +3,67 @@ import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import { useEffect,useRef,useState } from 'react';
 import "../css/Map.css";
+import axios from 'axios';
+import GpsFixedIcon from '@mui/icons-material/GpsFixed';
+import FolderSpecialIcon from '@mui/icons-material/FolderSpecial';
 
+var folder=[
+    {
+        id : 0,
+        name : '폴더1',
+        location : ['세종대학교', '건국대학교']
+    },
+    {
+        id : 1,
+        name : '폴더2',
+        location : ['설빙','스타벅스','투썸플레이스']
+    },
+    {
+        id : 2,
+        name : '폴더3',
+        location : ['세종대학교', '스타벅스']
+    }
+]
+
+var user=[
+    {
+        name : '한별',
+        id : 'qufdl8382@gmail.com',
+        pw : '12345678'
+    }
+]
+
+var memo=[
+    {
+        id:0,
+        postdate: '20230730',
+        posttitle: '오늘 장소 일기1',
+        postcontent: 'brbrbrbrbr',
+        update: '00',
+        userId: 'qufdl8382@gmail.com',
+        _status : 'brbr', //로그인 상태
+        area : '세종대학교'
+    },
+    {
+        id:1,
+        postdate: '20230728',
+        posttitle: '오늘 장소 일기2',
+        postcontent: 'brbrbrbrbr',
+        update: '00',
+        userId: 'qufdl8382@gmail.com',
+        _status : 'brbr',
+        area:'세종대학교'
+    },
+    {
+        id:2,
+        postdate: '20230623',
+        posttitle: '오늘 장소 일기3',
+        postcontent: 'brbrbrbrbr',
+        update: '00',
+        userId: 'qufdl8382@gmail.com',
+        _status : 'brbr'
+    }
+]
 
 const {kakao}=window;
 
@@ -76,37 +136,99 @@ const Map=(props)=>{
         setmypageOpen(mypageOpen=>!mypageOpen);
     }
 
+    //폴더목록
+    const [folderlist, setfolderlist] = useState(true);
+    const [selectedFolder, setSelectedFolder] = useState(null);
+    
+    const folderClick = (folder) => {
+      setfolderlist(!folderlist);
+      setSelectedFolder(folder);
+    };
+
+    //기록목록
+    const [memolist, setmemolist]=useState(true);
+    const [selectedList, setSelectedList]=useState(null);
+    const [viewAll, setViewAll]=useState(true); //전체보기 or 장소별로 보기 
+
+    const memoClick=(memo)=>{
+        setmemolist(!setmemolist);
+        setSelectedList(memo);
+    }
+
+    //회원탈퇴
+    const handleDeleteProfile=(e)=>{
+        e.preventDefault();
+        if(window.confirm('정말로 탈퇴하시겠습니까?ㅜ ')){
+            axios.delete('https://jsonplaceholder.typicode.com/todos/1') //임시 url
+                .then(function (response) {
+                    // handle success
+                    console.log('회원정보 삭제 성공');
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log('실패');
+                })
+        }
+    }
+
     
     return(
         <div id='home'>
             <div className='mainbar'>
                 <Link to="/">
-                    <button className='linkbtn'>4N</button>
+                    <button className='homebtn'>4N</button>
+                </Link>
+                <Link to="/Prac">
+                    <button style={{backgroundColor:'transparent', color:'white'}}>pra</button>
                 </Link> 
                 <button onClick={Mymemo} className={mymemoOpen?'btnActive':'btnInactive'}>내기록</button>
                 <button onClick={Mylocation} className={mylctOpen?'btnActive':'btnInactive'}>내장소</button> 
-                <button onClick={Mypage} className={mypageOpen?'btnActive':'btnInactive'}>마이페이지</button> 
+                <button onClick={Mypage} className={mypageOpen?'btnActive':'btnInactive'} style={{marginBottom:'40vh'}}>마이페이지</button> 
                 <Link to="/Login">
-                    <button className='linkbtn'>로그인</button>
+                    <button className='loginbtn'>로그인</button>
                 </Link>   
-                <Link to="/Prac">
-                    <button >pra</button>
-                </Link> 
             </div>
             <div className={mymemoOpen?'mymemoActive':'mymemoInactive'}>
                 <h3>내 기록</h3>
             </div>
             <div className={mylctOpen?'mylctActive':'mylctInactive'}>
-                <h3>내 장소</h3>
+                <h3 style={{marginLeft:'12vw'}}>내 장소</h3>
+                <div className='mylocation'>
+                    {folderlist ? (
+                        <div className='folder'>
+                            <div>
+                                <button style={{margin:'0px 0px 10px 10px'}}>+폴더추가</button>
+                            </div>
+                            <div>
+                                {folder.map((data)=>(
+                                    <div  className='folderlist'>
+                                        <button key={data.id} onClick={()=>folderClick(data)}>{data.name}
+                                            <button className='more'>...</button>
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ) : (
+                        <div className='location'>
+                            <div className='locationList'>
+                                {selectedFolder && selectedFolder.location.map((loc) => <div key={loc}><button>{loc}</button></div>)}
+                            </div>
+                            <button onClick={folderClick}>목록으로</button>
+                        </div>
+                    )}
+                </div>
             </div>
             <div className={mypageOpen?'mypageActive':'mypageInactive'}>
-                <h3>마이페이지</h3>
-                <button>회원탈퇴</button>
+                <h3 style={{marginLeft:'10vw'}}>마이페이지</h3>
+                <span>이름</span><span>{user.map((data)=>(<span>{data.name}</span>))}</span><br/>
+                <span>이메일</span><span>{user.map((data)=>(<span>{data.id}</span>))}</span><br/>
+                <button onClick={handleDeleteProfile}>회원탈퇴</button>
             </div>
             <div>
                 <div className='minibar'>
-                    <button onClick={placeMarker}>-O-</button>
-                    <button>☆</button>
+                    <button onClick={placeMarker}><GpsFixedIcon></GpsFixedIcon></button>
+                    <button><FolderSpecialIcon></FolderSpecialIcon></button>
                 </div>
                 <input 
                     className='find'

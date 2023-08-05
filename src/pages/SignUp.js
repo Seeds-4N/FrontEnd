@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { Link } from 'react-router-dom';
+import { Link ,Navigate,useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import "../css/signup.css";
 import "../css/Map.css";
@@ -104,6 +104,7 @@ const SignUp=(props)=>{
         .then((result)=>{
             console.log(result.data);
             alert('회원가입 성공');
+            Navigate('/Login');
         }).catch();
     }
 
