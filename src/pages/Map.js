@@ -68,8 +68,10 @@ const Map=(props)=>{
         }
 
         MyLocation();
+
        
     },[]);
+    
 
     //mainbar button click
     const[mymemoOpen, setmymemoOpen]=useState(false);
