@@ -1,121 +1,140 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Link } from 'react-router-dom';
-import { useEffect,useRef,useState } from 'react';
+/* eslint-disable */
+
+import React from "react";
+import ReactDOM from "react-dom";
+import { Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 import "../css/Map.css";
 
+const { kakao } = window;
 
-const {kakao}=window;
+const Map = (props) => {
+  const container = useRef(null); // 지도를 담을 영역의 DOM 레퍼런스
+  const [map, setMap] = useState(null); // 지도 인스턴스를 저장할 state
+  const [locPosition, setlocPosition] = useState();
 
-const Map=(props)=>{
-    
-    const container = useRef(null); // 지도를 담을 영역의 DOM 레퍼런스
-    const [map, setMap] = useState(null); // 지도 인스턴스를 저장할 state
-    const [locPosition, setlocPosition]=useState();
+  navigator.geolocation.getCurrentPosition((position) => {
+    const lat = position.coords.latitude, // 위도
+      lon = position.coords.longitude; // 경도
+    setlocPosition(new window.kakao.maps.LatLng(lat, lon));
+  });
 
-    navigator.geolocation.getCurrentPosition((position) => {
-        const lat = position.coords.latitude, // 위도
-        lon = position.coords.longitude; // 경도
-        setlocPosition(new window.kakao.maps.LatLng(lat, lon));
-    });
+  // 위치에 마커 생성
+  const placeMarker = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const marker = new window.kakao.maps.Marker({ position: locPosition });
+        marker.setMap(map);
+        map.setCenter(locPosition); // 마커가 위치한 중심으로 이동
+      });
+    } else {
+      alert("현재 위치를 받아오지 못했습니다.");
+    }
+  };
 
-    // 위치에 마커 생성
-    const placeMarker = () => {
-        if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-            const marker = new window.kakao.maps.Marker({ position: locPosition });
-            marker.setMap(map);
-            map.setCenter(locPosition); // 마커가 위치한 중심으로 이동
-        });
-        } else {
-        alert("현재 위치를 받아오지 못했습니다.");
-        }
-    };
+  // 지도 초기화 // 수정
+  useEffect(() => {
+    if (navigator.geolocation && container.current) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        const loc = new window.kakao.maps.LatLng(lat, lon);
+        setlocPosition(loc);
 
-
-    // 지도 초기화
-    useEffect(() => {
-        if (container.current) {
         const options = {
-            center: locPosition,
-            level: 3,
+          center: loc,
+          level: 3,
         };
 
-        const initialMap = new window.kakao.maps.Map(container.current, options);
+        const initialMap = new window.kakao.maps.Map(
+          container.current,
+          options
+        );
         setMap(initialMap);
-        }
-
-
-    }, []); //[container]
-
-    
-   
-
-    //mainbar button click
-    const[mymemoOpen, setmymemoOpen]=useState(false);
-    const[mylctOpen, setmylctOpen]=useState(false);
-    const[mypageOpen, setmypageOpen]=useState(false);
-
-    function Mymemo(){
-        setmylctOpen(false);
-        setmypageOpen(false);
-        setmymemoOpen(mymemoOpen=>!mymemoOpen);
+      });
+    } else {
+      alert("현재 위치를 받아오지 못했습니다.");
     }
+  }, [container]);
 
-    function Mylocation(){
-        setmymemoOpen(false);
-        setmypageOpen(false);
-        setmylctOpen(mylctOpen=>!mylctOpen);
-    }
+  //mainbar button click
+  const [mymemoOpen, setmymemoOpen] = useState(false);
+  const [mylctOpen, setmylctOpen] = useState(false);
+  const [mypageOpen, setmypageOpen] = useState(false);
 
-    function Mypage(){
-        setmymemoOpen(false);
-        setmylctOpen(false);
-        setmypageOpen(mypageOpen=>!mypageOpen);
-    }
+  function Mymemo() {
+    setmylctOpen(false);
+    setmypageOpen(false);
+    setmymemoOpen((mymemoOpen) => !mymemoOpen);
+  }
 
-    
-    return(
-        <div id='home'>
-            <div className='mainbar'>
-                <Link to="/">
-                    <button className='linkbtn'>4N</button>
-                </Link> 
-                <button onClick={Mymemo} className={mymemoOpen?'btnActive':'btnInactive'}>내기록</button>
-                <button onClick={Mylocation} className={mylctOpen?'btnActive':'btnInactive'}>내장소</button> 
-                <button onClick={Mypage} className={mypageOpen?'btnActive':'btnInactive'}>마이페이지</button> 
-                <Link to="/Login">
-                    <button className='linkbtn'>로그인</button>
-                </Link>   
-                <Link to="/Prac">
-                    <button >pra</button>
-                </Link> 
-            </div>
-            <div className={mymemoOpen?'mymemoActive':'mymemoInactive'}>
-                <h3>내 기록</h3>
-            </div>
-            <div className={mylctOpen?'mylctActive':'mylctInactive'}>
-                <h3>내 장소</h3>
-            </div>
-            <div className={mypageOpen?'mypageActive':'mypageInactive'}>
-                <h3>마이페이지</h3>
-                <button>회원탈퇴</button>
-            </div>
-            <div>
-                <div className='minibar'>
-                    <button onClick={placeMarker}>-O-</button>
-                    <button>☆</button>
-                </div>
-                <input 
-                    className='find'
-                    type='text'
-                    placeholder='어떤 장소를 찾으시나요?'
-                    ></input>
-                <div id='map' ref={container}></div>
-            </div>
+  function Mylocation() {
+    setmymemoOpen(false);
+    setmypageOpen(false);
+    setmylctOpen((mylctOpen) => !mylctOpen);
+  }
+
+  function Mypage() {
+    setmymemoOpen(false);
+    setmylctOpen(false);
+    setmypageOpen((mypageOpen) => !mypageOpen);
+  }
+
+  return (
+    <div id="home">
+      <div className="mainbar">
+        <Link to="/">
+          <button className="linkbtn">4N</button>
+        </Link>
+        <button
+          onClick={Mymemo}
+          className={mymemoOpen ? "btnActive" : "btnInactive"}
+        >
+          내기록
+        </button>
+        <button
+          onClick={Mylocation}
+          className={mylctOpen ? "btnActive" : "btnInactive"}
+        >
+          내장소
+        </button>
+        <button
+          onClick={Mypage}
+          className={mypageOpen ? "btnActive" : "btnInactive"}
+        >
+          마이페이지
+        </button>
+        <Link to="/Login">
+          <button className="linkbtn">로그인</button>
+        </Link>
+        {/* <Link to="/Prac"> */}
+        {/* <button>pra</button> */}
+        {/* </Link> */}
+      </div>
+      <div className={mymemoOpen ? "mymemoActive" : "mymemoInactive"}>
+        <h3>내 기록</h3>
+      </div>
+      <div className={mylctOpen ? "mylctActive" : "mylctInactive"}>
+        <h3>내 장소</h3>
+      </div>
+      <div className={mypageOpen ? "mypageActive" : "mypageInactive"}>
+        <h3>마이페이지</h3>
+        <button>회원탈퇴</button>
+      </div>
+      <div>
+        <div className="minibar">
+          <button onClick={placeMarker}>-O-</button>
+          <button>☆</button>
         </div>
-    );
-    
+        <input
+          className="find"
+          type="text"
+          placeholder="어떤 장소를 찾으시나요?"
+        ></input>
+        <div id="map" ref={container}></div>
+      </div>
+    </div>
+  );
 };
 export default Map;
 
@@ -125,7 +144,7 @@ export default Map;
         <Link to="/SignUp">
             <button style={{color:'red'}}>회원가입</button>
         </Link>
-*/ 
+*/
 /*
 useEffect(()=>{
         const container=document.getElementById('map');
