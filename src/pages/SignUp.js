@@ -7,10 +7,10 @@ import "../css/Map.css";
 
 const SignUp=(props)=>{
     //이름, 이메일, 비밀번호, 비밀번호 확인
-    const[name, setName]=useState('')
-    const[id, setId]=useState('')
-    const[password, setPassword]=useState('')
-    const[pwConfirm, setPwConfirm]=useState('')
+    const [username, setUsername] = useState(''); // 변경
+    const [useremail, setUseremail] = useState(''); // 변경
+    const [password, setPassword] = useState('');
+    const [re_password, setRePassword] = useState('');
 
     //유효성 검사
     const[isName, setisName]=useState(false);
@@ -26,7 +26,7 @@ const SignUp=(props)=>{
 
     //이름
     const handleinputname=(e)=>{
-        setName(e.target.value);
+        setUsername(e.target.value);
         if(e.target.value.length<2){
             setNameMsg('2글자 이상으로 입력해주세요');
             setisName(false);
@@ -39,7 +39,7 @@ const SignUp=(props)=>{
 
     //이메일
     const handleinputid=(e)=>{
-        setId(e.target.value);
+        setUseremail(e.target.value);
         if(e.target.value.length>=2 && e.target.value.includes('@') && e.target.value.includes('.')){
             setEmailMsg('');
             setisEmail(true);
@@ -65,7 +65,7 @@ const SignUp=(props)=>{
 
     //비밀번호 확인
     const handleinputpwcfm=(e)=>{
-        setPwConfirm(e.target.value);
+        setRePassword(e.target.value);
         if(password===e.target.value){
             setpwcfmMsg('');
             setisPwCfm(true);
@@ -89,17 +89,18 @@ const SignUp=(props)=>{
 
     const gotosignup=()=>{
 
-        console.log("name:",name);
-        console.log("id:",id);
-        console.log("pw:",password);
-        console.log("pwcfm:",pwConfirm);  
+        console.log("username:", username);
+        console.log("useremail:", useremail);
+        console.log("password:", password);
+        console.log("re_password:", re_password);
 
-        axios.get('http://127.0.0.1:8000/register/'
+
+        axios.post('http://127.0.0.1:8000/register/'
         ,{
-            name:name,
-            id:id,
-            password:password,
-            pwConfirm:pwConfirm,
+            username: username,
+            useremail: useremail,
+            password: password,
+            re_password: re_password,
         })
         .then((result)=>{
             console.log(result.data);
@@ -115,20 +116,20 @@ const SignUp=(props)=>{
                 
                 <input 
                     type="text"
-                    id="name"
+                    id="username"
                     placeholder='이름을 입력해주세요'
                     required
-                    value={name}
+                    value={username}
                     onChange={handleinputname}
                 />
                 <span className={isName?'':'invalid'}>{nameMsg}</span>
                 
                 <input
-                    type='email'
+                    type='useremail'
                     id='id' 
                     placeholder='이메일를 입력해주세요'
                     required
-                    value={id}
+                    value={useremail}
                     onChange={handleinputid}
                 />
                 <span className={isEmail?'':'invalid'}>{emailMsg}</span>
@@ -148,7 +149,7 @@ const SignUp=(props)=>{
                     type='password'
                     placeholder='비밀번호 확인'
                     required
-                    value={pwConfirm}
+                    value={re_password}
                     onChange={handleinputpwcfm}
                 />
                 <span className={isPwCfm?'':'invalid'}>{pwcfmMsg}</span>
@@ -172,12 +173,4 @@ const SignUp=(props)=>{
     
 };
 export default SignUp;
-
-
-/*
-<label for="name">이름</label>
-<label for="id">아이디</label>
-<label for='password'>비밀번호</label>
-<label for='confirmpw'>비밀번호 확인</label>
-*/
 
