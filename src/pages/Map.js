@@ -6,6 +6,109 @@ import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import "../css/Map.css";
 
+// memo
+const Memo = ({ onCreate }) => {
+  const titleInput = useRef();
+  const contentInput = useRef();
+
+  const [state, setState] = useState({
+    title: "",
+    content: "",
+    emotion: 1,
+  });
+
+  const handleChangeState = (e) => {
+    // console.log(e.target.name);
+    // console.log(e.target.value);
+
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = () => {
+    if (state.title.length < 1) {
+      // alert("제목은 최소 1글자 이상 입력해주세요");
+      titleInput.current.focus();
+      // titleInput처럼 Dom 요소를 선택하는 UseRef로 생성한 레퍼런스 객체는 현재 가리키는 값을 current라는 프로퍼티로 사용할 수 있음
+      return;
+      // 알림을 띄우고 강제 종료 <- 요즘 트렌드 아님
+      // focus를 사용해보자
+    }
+
+    if (state.content.length < 5) {
+      // alert("일기 본문은 최소 5글자 이상 입력해주세요");
+      contentInput.current.focus();
+      return;
+    }
+
+    onCreate(state.title, state.content, state.emotion);
+    // console.log(state);
+    alert("저장 성공");
+  };
+
+  return (
+    <div className="MemoEditor">
+      <h2>기록 생성</h2>
+      <div></div>
+      <div className="title_container">
+        <span>제목: </span>
+        <input
+          name="title"
+          value={state.title}
+          className="title"
+          // onChange={(e) => {
+          // onChange: 이벤트 핸들러로 입력하는 값이 변경되었을 때 작동
+          //   // setAuthor(e.target.value); //author의 상태를 입력값으로 업데이트
+          //   setState({
+          //     ...state,
+          //     // state의 기본값 전달 / 이 spread 연산자가 밑으로 내려가면 기본값으로 덮어씌어지기 때문에 내려가면 안됨
+          //     author: e.target.value,
+          //     // content: state.content,
+          //   });
+          // }}
+          onChange={handleChangeState}
+          ref={titleInput}
+        />
+      </div>
+      <div className="content_container">
+        <textarea
+          name="content"
+          value={state.content}
+          className="content"
+          // onChange={(e) => {
+          //   // setContent(e.target.value);
+          //   setState({
+          //     ...state,
+          //     // author: state.author,
+          //     content: e.target.content,
+          //   });
+          // }}
+          onChange={handleChangeState}
+          ref={contentInput}
+        />
+      </div>
+      <div>
+        <select
+          name="emotion"
+          value={state.emotion}
+          onChange={handleChangeState}
+        >
+          <option value={1}>1</option>
+          <option value={2}>2</option>
+          <option value={3}>3</option>
+          <option value={4}>4</option>
+          <option value={5}>5</option>
+        </select>
+      </div>
+      <div>
+        <button onClick={handleSubmit}>저장하기</button>
+      </div>
+    </div>
+  );
+};
+
 const { kakao } = window;
 
 const Map = (props) => {
@@ -31,6 +134,8 @@ const Map = (props) => {
       alert("현재 위치를 받아오지 못했습니다.");
     }
   };
+
+  // 지도 - 지민
 
   // 지도 초기화 // 수정
   useEffect(() => {
@@ -62,6 +167,8 @@ const Map = (props) => {
   const [mylctOpen, setmylctOpen] = useState(false);
   const [mypageOpen, setmypageOpen] = useState(false);
 
+  const [mymemoCreate, setmymemoCreate] = useState(false);
+
   function Mymemo() {
     setmylctOpen(false);
     setmypageOpen(false);
@@ -78,6 +185,12 @@ const Map = (props) => {
     setmymemoOpen(false);
     setmylctOpen(false);
     setmypageOpen((mypageOpen) => !mypageOpen);
+  }
+
+  // 지민
+  function MymemoCreate() {
+    setmymemoCreate((mymemoCreate) => !mymemoCreate);
+    // console.log("클릭");
   }
 
   return (
@@ -113,6 +226,15 @@ const Map = (props) => {
       </div>
       <div className={mymemoOpen ? "mymemoActive" : "mymemoInactive"}>
         <h3>내 기록</h3>
+        <button
+          onClick={MymemoCreate}
+          className={
+            mymemoCreate ? "mymemocreateActive" : "mymemocreateInactive"
+          }
+        >
+          +
+        </button>
+        {mymemoCreate && <Memo />}
       </div>
       <div className={mylctOpen ? "mylctActive" : "mylctInactive"}>
         <h3>내 장소</h3>

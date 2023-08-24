@@ -1,91 +1,128 @@
 /* Map.js */
-.find{
-    position: absolute;
-    right: 30px;
-    top: 50px;
-    overflow: hidden;
-    z-index: 100;
-    background-color: white;
-    border-radius: 20px;
-    padding: 5px;
+.find {
+  position: absolute;
+  right: 30px;
+  top: 50px;
+  overflow: hidden;
+  z-index: 100;
+  background-color: white;
+  border-radius: 20px;
+  padding: 5px;
 }
-.minibar{
-    position: absolute;
-    right: 30px;
-    bottom: 90px;
-    overflow: hidden;
-    z-index: 100;
-    background-color: white;
-    border-radius: 20px;
-    padding: 5px;
+.minibar {
+  position: absolute;
+  right: 30px;
+  bottom: 90px;
+  overflow: hidden;
+  z-index: 100;
+  background-color: white;
+  border-radius: 20px;
+  padding: 5px;
 }
-.minibar button{
-    width: auto;
-    background-color: transparent;
-    font-weight: bolder;
+.minibar button {
+  width: auto;
+  background-color: transparent;
+  font-weight: bolder;
 }
-
 
 /* all */
-Link{
-    text-decoration: none;
-    color: #FCF7EC;
+Link {
+  text-decoration: none;
+  color: #fcf7ec;
 }
-#map{
-    width: 100vw;
-    height: 100vh;
+#map {
+  width: 100vw;
+  height: 100vh;
 }
-#home{
-    display: flex;
-    
+#home {
+  display: flex;
 }
 
 /* module */
-.mainbar{
-    height: 100vh;
-    width: 100px;
-    min-width: 100px;
-    background-color: #AFC2AE;
-    z-index: 200;
-    padding-top: 20px;
+.mainbar {
+  height: 100vh;
+  width: 100px;
+  min-width: 100px;
+  background-color: #afc2ae;
+  z-index: 200;
+  padding-top: 20px;
 }
-.mainbar button{
-    border: none;
-    width: 100%;
-    font-weight: bolder;
+.mainbar button {
+  border: none;
+  width: 100%;
+  font-weight: bolder;
 }
-.mainbar>button:hover, .mainbar>button:active{
-    background-color: #FCF7EC;
-    color: #9BA79C;
+.mainbar > button:hover,
+.mainbar > button:active {
+  background-color: #fcf7ec;
+  color: #9ba79c;
 }
-
-
 
 /*panel*/
-.mymemoActive, .mylctActive, .mypageActive{
-    position: absolute;
-    margin-left: 100px;
-    z-index: 100;
-    background-color: #FCF7EC;
-    width: 30vw;
-    height: 100vh;
-    transition: 0.5s;
-    padding: 50px 60px 50px 60px;
+.mymemoActive,
+.mylctActive,
+.mypageActive {
+  position: absolute;
+  margin-left: 100px;
+  z-index: 100;
+  background-color: #fcf7ec;
+  width: 30vw;
+  height: 100vh;
+  transition: 0.5s;
+  padding: 50px;
 }
-.mymemoInactive, .mylctInactive, .mypageInactive{
-    position: absolute;
-    margin-left: -40vw;
+.mymemoInactive,
+.mylctInactive,
+.mypageInactive {
+  position: absolute;
+  margin-left: -40vw;
 }
-.btnActive{
-    color: #9BA79C;
-    background-color: #FCF7EC;
+.btnActive {
+  color: #9ba79c;
+  background-color: #fcf7ec;
 }
-.btnInactive{
-    color: #FCF7EC;
-    background-color: #AFC2AE;
+.btnInactive {
+  color: #fcf7ec;
+  background-color: #afc2ae;
 }
-.linkbtn{
-    background-color: #AFC2AE;
-    color: #FCF7EC;
+.linkbtn {
+  background-color: #afc2ae;
+  color: #fcf7ec;
 }
 
+.Memo {
+  border: 1px solid gray;
+  text-align: center;
+  padding: 20px;
+}
+
+.Memo,
+textarea {
+  margin-bottom: 20px;
+  /* width: 500px; */
+  padding: 10px;
+}
+
+.Memo select {
+  width: 300px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.Memo button {
+  width: 500px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.MemoEditor .title {
+  width: 150px;
+}
+
+.MemoEditor .content_container {
+  margin-top: 10px;
+}
+
+.MemoEditor .content {
+  min-height: 250px;
+}
