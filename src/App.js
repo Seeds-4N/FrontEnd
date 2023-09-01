@@ -12,7 +12,7 @@ function App() {
     );
     console.log(res);
 
-    const initData = res.slice(0, 20).map((it) => {
+    const initData = res.map((it) => {
       return {
         title: it.title,
         content: it.content,
@@ -45,11 +45,31 @@ function App() {
     setData([newItem, ...data]);
   };
 
+  const onRemove = (targetId) => {
+    console.log(`${targetId}가 삭제되었습니다`);
+    const newDiaryList = data.filter((it) => it.id !== targetId);
+    setData(newDiaryList);
+  };
+
+  const onEdit = (targetId, newContent) => {
+    setData(
+      data.map((it) =>
+        it.id === targetId ? { ...it, content: newContent } : it
+      )
+    );
+  };
+
   return (
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Map />}></Route>
+          <Route
+            onCreate={onCreate}
+            onEdit={onEdit}
+            onDelete={onRemove}
+            path="/"
+            element={<Map />}
+          ></Route>
           <Route path="/SignUp/*" element={<SignUp />}></Route>
           <Route path="/Login/*" element={<Login />}></Route>
           {/* <Route path="/Prac/*" element={<Prac />}></Route> */}

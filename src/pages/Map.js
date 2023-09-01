@@ -50,8 +50,15 @@ const Memo = ({ onCreate }) => {
 
   return (
     <div className="MemoEditor">
-      <h2>기록 생성</h2>
+      <h3>스타벅스 구의역점</h3>
       <div></div>
+
+      {/* 클릭한 위치의 위도, 경도를 표시할 엘리먼트  */}
+      <div id="clickLatlng">
+        {clickLatlng &&
+          `위도: ${clickLatlng.getLat()}, 경도: ${clickLatlng.getLng()}`}
+      </div>
+
       <div className="title_container">
         <span>제목: </span>
         <input
@@ -70,6 +77,7 @@ const Memo = ({ onCreate }) => {
           // }}
           onChange={handleChangeState}
           ref={titleInput}
+          placeholder="제목을 입력하세요"
         />
       </div>
       <div className="content_container">
@@ -87,9 +95,10 @@ const Memo = ({ onCreate }) => {
           // }}
           onChange={handleChangeState}
           ref={contentInput}
+          placeholder="장소를 기록하세요"
         />
       </div>
-      <div>
+      {/* <div>
         <select
           name="emotion"
           value={state.emotion}
@@ -101,7 +110,7 @@ const Memo = ({ onCreate }) => {
           <option value={4}>4</option>
           <option value={5}>5</option>
         </select>
-      </div>
+      </div> */}
       <div>
         <button onClick={handleSubmit}>저장하기</button>
       </div>
@@ -135,7 +144,35 @@ const Map = (props) => {
     }
   };
 
-  // 지도 - 지민
+  // 지민
+
+  // 마커를 표시할 변수 추가
+  const [marker, setMarker] = useState(null);
+
+  // 클릭한 위치의 위도, 경도를 표시할 변수
+  const [clickLatlng, setClickLatlng] = useState(null);
+
+  // 지도 클릭 이벤트 핸들러
+  const handleMapClick = (mouseEvent) => {
+    const latlng = mouseEvent.latLng;
+
+    // 기존 마커가 있으면 제거
+    if (marker) {
+      marker.setMap(null);
+    }
+
+    // 새로운 마커 생성
+    const newMarker = new kakao.maps.Marker({
+      position: latlng,
+    });
+
+    // 지도에 마커 표시
+    newMarker.setMap(map);
+    setMarker(newMarker);
+
+    // 클릭한 위치의 위도, 경도 표시
+    setClickLatlng(latlng);
+  };
 
   // 지도 초기화 // 수정
   useEffect(() => {
@@ -157,10 +194,16 @@ const Map = (props) => {
         );
         setMap(initialMap);
       });
+
+      // 지도 클릭 이벤트 등록
+
+      if (map) {
+        kakao.maps.event.addListener(map, "click", handleMapClick);
+      }
     } else {
       alert("현재 위치를 받아오지 못했습니다.");
     }
-  }, [container]);
+  }, [container, map]);
 
   //mainbar button click
   const [mymemoOpen, setmymemoOpen] = useState(false);
@@ -243,6 +286,7 @@ const Map = (props) => {
         <h3>마이페이지</h3>
         <button>회원탈퇴</button>
       </div>
+
       <div>
         <div className="minibar">
           <button onClick={placeMarker}>-O-</button>
@@ -255,6 +299,10 @@ const Map = (props) => {
         ></input>
         <div id="map" ref={container}></div>
       </div>
+
+      {/* <div class="modal">
+        <div class="modal_body">Modal</div>
+      </div> */}
     </div>
   );
 };
